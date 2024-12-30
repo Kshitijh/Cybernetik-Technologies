@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybernetik Technologies</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+</head>
+<body>
+    <!-- Sticky container -->
+    <div class="sticky-container">
+        <!-- Header content -->
+        <div class="sticky-container-header">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Cybernetik Technologies Logo" class="header-logo">
+            <h1 class="header-title">Cybernetik Technologies</h1>
+        </div>
+        <!-- Section controls -->
+        <div class="section-buttons">
+            <form id="search-form" method="GET" action="{{ url_for('search') }}" style="display: inline;">
+                <label for="start-date">From:</label>
+                <input type="date" id="start-date" name="start_date" required>
+                <label for="end-date">To:</label>
+                <input type="date" id="end-date" name="end_date" required>
+                <button type="submit">Search</button>
+            </form>
+            <button type="button" id="reset-btn" onclick="resetTable()">Reset</button>
+            <button type="button" id="create-btn" onclick="addNewRow()">Create</button>
+            <button type="button" id="delete-btn" onclick="deleteRow()">Delete</button>
+            <button type="button" id="edit-btn" onclick="editRow()">Edit</button>
+        </div>
+    </div>
+    <table id="data-table">
+        <thead>
+            <tr>
+                <th>Sr. No.</th>
+                {% for column in columns %}
+                <th>{{ column }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for row in rows %}
+            <tr data-index="{{ row[1] }}">
+                <td>{{ row[0] }}</td>
+                {% for cell in row[1:] %}
+                <td>{{ cell }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <script src="{{ url_for('static', filename='addRow.js') }}"></script>
+    <script src="{{ url_for('static', filename='deleteRow.js') }}"></script>
+    <script src="{{ url_for('static', filename='editRow.js') }}"></script>
+    <script src="{{ url_for('static', filename='resetTable.js') }}"></script>
+    <script src="{{ url_for('static', filename='rowSelection.js') }}"></script>
+
+</body>
+</html>
